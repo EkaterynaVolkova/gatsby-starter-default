@@ -1,16 +1,40 @@
-import * as React from "react"
-import { Link } from "gatsby"
-
+import React from "react"
+import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 
-const SecondPage = () => (
-  <Layout>
-    <SEO title="Page two" />
-    <h1>Hi from the second page</h1>
-    <p>Welcome to page 2</p>
-    <Link to="/">Go back to the homepage</Link>
-  </Layout>
-)
+export const query = graphql`
+  query {
+    wpgraphql {
+      posts {
+        nodes {
+          id
+          title
+          uri
+          excerpt
+        }
+      }
+    }
+  }
+`
 
-export default SecondPage
+const Blog = ({ data }) => {
+    const posts = data.wpgraphql.posts.nodes
+
+    return (
+        <Layout>
+            {posts.map(post => (
+                <article key={post.id}>
+                    <h2>
+                        <Link
+                            to={`/blog/${post.uri}`}
+                            dangerouslySetInnerHTML={{ __html: post.title }}
+                        />
+                    </h2>
+                    <div dangerouslySetInnerHTML={{ __html: post.excerpt }} />
+                </article>
+            ))}
+        </Layout>
+    )
+}
+
+export default Blog

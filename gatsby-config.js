@@ -29,6 +29,15 @@ module.exports = {
       },
     },
     `gatsby-plugin-gatsby-cloud`,
+    {
+      resolve: `gatsby-source-graphql`,
+      options: {
+        // Remote schema query type. This is an arbitrary name.
+        typeName: "WPGraphQL",
+        fieldName: "wpgraphql",
+        url: "http://pizza.infolite.net/wp/graphql",
+      },
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
